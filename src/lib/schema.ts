@@ -91,21 +91,23 @@ const education = z.strictObject({
   details: nonEmpty.optional(),
 });
 
-const certification = z.strictObject({
-  name: nonEmpty,
-  issuer: nonEmpty.default('Amazon Web Services'),
-  issued: partialDate,
-  /** Omit if the certification does not expire. */
-  expires: partialDate.optional(),
-  credentialId: nonEmpty.optional(),
-  /** Public verification page (Credly, issuer portal, ...). */
-  url: url.optional(),
-  /**
-   * Badge image: absolute URL (e.g. the Credly-hosted image) or a file in `public/`.
-   * Omit to use the generic placeholder badge.
-   */
-  badge: asset.optional(),
-});
+const certification = (defaultIssuer: string) =>
+  z.strictObject({
+    name: nonEmpty,
+    /** Defaults to the vendor of the active brand ("Amazon Web Services" for `aws`). */
+    issuer: nonEmpty.default(defaultIssuer),
+    issued: partialDate,
+    /** Omit if the certification does not expire. */
+    expires: partialDate.optional(),
+    credentialId: nonEmpty.optional(),
+    /** Public verification page (Credly, issuer portal, ...). */
+    url: url.optional(),
+    /**
+     * Badge image: absolute URL (e.g. the Credly-hosted image) or a file in `public/`.
+     * Omit to use the generic placeholder badge.
+     */
+    badge: asset.optional(),
+  });
 
 const skillItem = z.union([
   nonEmpty.transform((name) => ({ name, level: undefined as number | undefined })),
@@ -144,18 +146,27 @@ const project = z.strictObject({
   tags,
 });
 
-export const resumeSchema = z.strictObject({
-  basics,
-  experiences: z.array(experience).optional(),
-  projects: z.array(project).optional(),
-  certifications: z.array(certification).optional(),
-  education: z.array(education).optional(),
-  skills: z.array(skillGroup).optional(),
-  languages: z.array(language).optional(),
-  interests: z.array(interest).optional(),
-});
+/**
+ * Builds the schema. `defaultIssuer` is the certification issuer used when the
+ * data file leaves it out; it follows the active brand.
+ */
+export function makeResumeSchema(defaultIssuer = 'Amazon Web Services') {
+  return z.strictObject({
+    basics,
+    experiences: z.array(experience).optional(),
+    projects: z.array(project).optional(),
+    certifications: z.array(certification(defaultIssuer)).optional(),
+    education: z.array(education).optional(),
+    skills: z.array(skillGroup).optional(),
+    languages: z.array(language).optional(),
+    interests: z.array(interest).optional(),
+  });
+}
+
+/** Schema with the default (AWS) issuer, used to generate resume.schema.json. */
+export const resumeSchema = makeResumeSchema();
 
 export type Resume = z.output<typeof resumeSchema>;
 export type Experience = z.output<typeof experience>;
-export type Certification = z.output<typeof certification>;
+export type Certification = z.output<ReturnType<typeof certification>>;
 export type Profile = z.output<typeof profile>;

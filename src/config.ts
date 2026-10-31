@@ -1,13 +1,28 @@
 /**
  * Theme settings. Resume content goes in `src/data/resume.yaml`.
  * The public URL (`site` / `base`) is set in `astro.config.mjs`.
+ *
+ * This file is also read by astro.config.mjs: keep it free of `astro:*` imports.
  */
+import type { Brand } from './brands';
 import type { Locale } from './i18n/ui';
 
 export type SectionId = 'experiences' | 'projects' | 'certifications' | 'education';
 export type SidebarId = 'skills' | 'languages' | 'interests';
 
 export interface ThemeConfig {
+  /**
+   * Visual style: 'aws' | 'azure' | 'gcp' | 'openstack'.
+   * Changes colours, font and console details only; the content is the same.
+   * The BRAND environment variable overrides it for one build.
+   */
+  brand: Brand;
+  /**
+   * Resume data file (YAML), relative to the project root.
+   * Examples for every brand are in `src/data/examples/`.
+   * The RESUME_DATA environment variable overrides it for one build.
+   */
+  data: string;
   /** Language of the interface labels and date formats ('en' | 'fr', see src/i18n/ui.ts). */
   lang: Locale;
   /** Theme used before the visitor picks one: follow the OS, or force light/dark. */
@@ -38,6 +53,8 @@ export interface ThemeConfig {
 }
 
 const config: ThemeConfig = {
+  brand: 'aws',
+  data: 'src/data/resume.yaml',
   lang: 'en',
   defaultTheme: 'system',
   sections: ['experiences', 'certifications', 'projects', 'education'],

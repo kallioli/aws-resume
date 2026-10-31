@@ -1,14 +1,14 @@
 {
-  "name": "aws-resume",
+  "name": "cloud-resume",
   "version": "2.0.0",
-  "description": "A modern, data-driven resume theme for cloud engineers, inspired by the AWS console. Built with Astro.",
+  "description": "A modern, data-driven resume theme for cloud engineers, in the style of the AWS, Azure, Google Cloud or OpenStack consoles. Built with Astro.",
   "private": true,
   "type": "module",
   "license": "MIT",
   "author": "Kevin Allioli",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kallioli/aws-resume.git"
+    "url": "https://github.com/kallioli/cloud-resume.git"
   },
   "engines": {
     "node": ">=22.23.4"
@@ -17,13 +17,17 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "build:demo": "node scripts/build-demo.ts",
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro",
     "schema": "node scripts/generate-schema.ts"
   },
   "dependencies": {
+    "@fontsource-variable/google-sans-flex": "5.3.2",
     "@fontsource-variable/inter": "5.3.0",
+    "@fontsource-variable/open-sans": "5.3.0",
+    "@fontsource-variable/source-sans-3": "5.3.1",
     "astro": "7.4.4",
     "yaml": "2.9.1"
   },

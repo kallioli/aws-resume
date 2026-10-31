@@ -1,12 +1,12 @@
 /**
- * Loads and validates `src/data/resume.yaml` at build time.
+ * Loads and validates the resume data file (`data` in src/config.ts,
+ * `src/data/resume.yaml` by default) at build time.
  * A mistake in the file stops the build with a readable list of problems.
  */
 import { parse, YAMLParseError } from 'yaml';
-import raw from '../data/resume.yaml?raw';
-import { resumeSchema, type Resume } from './schema';
-
-const FILE = 'src/data/resume.yaml';
+import { brand, dataFile as FILE, dataRaw as raw } from 'virtual:cloud-resume/build';
+import { brandInfo } from '../brands';
+import { makeResumeSchema, type Resume } from './schema';
 
 function load(): Resume {
   let data: unknown;
@@ -17,7 +17,7 @@ function load(): Resume {
     throw new Error(`${FILE} is not valid YAML:\n${detail}`);
   }
 
-  const result = resumeSchema.safeParse(data);
+  const result = makeResumeSchema(brandInfo[brand].issuer).safeParse(data);
   if (!result.success) {
     const lines = result.error.issues.map((issue) => {
       const path = issue.path.length ? issue.path.join('.') : '(root)';
