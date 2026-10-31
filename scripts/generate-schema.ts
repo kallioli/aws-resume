@@ -11,5 +11,5 @@ import { resumeSchema } from '../src/lib/schema.ts';
 
 const json = z.toJSONSchema(resumeSchema, { io: 'input', unrepresentable: 'any' });
 const out = new URL('../src/data/resume.schema.json', import.meta.url);
-writeFileSync(out, `${JSON.stringify({ title: 'aws-resume data file', ...json }, null, 2)}\n`);
+writeFileSync(out, `${JSON.stringify({ title: 'cloud-resume data file', ...json }, null, 2)}\n`);
 console.log(`Wrote ${out.pathname}`);
