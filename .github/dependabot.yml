@@ -9,6 +9,13 @@ updates:
         patterns: ['astro', '@astrojs/*']
       dev-dependencies:
         dependency-type: development
+    ignore:
+      # @types/node follows the Node major in .nvmrc (24); bump both together.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+      # astro check does not support TypeScript 7 (native compiler) yet.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
 
   - package-ecosystem: github-actions
     directory: /
