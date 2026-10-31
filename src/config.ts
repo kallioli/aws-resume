@@ -14,15 +14,16 @@ export interface ThemeConfig {
   /**
    * Visual style: 'aws' | 'azure' | 'gcp' | 'openstack'.
    * Changes colours, font and console details only; the content is the same.
-   * The BRAND environment variable overrides it for one build.
+   * Defaults to 'aws'. The BRAND environment variable overrides it for one build.
    */
-  brand: Brand;
+  brand?: Brand;
   /**
    * Resume data file (YAML), relative to the project root.
    * Examples for every brand are in `src/data/examples/`.
-   * The RESUME_DATA environment variable overrides it for one build.
+   * Defaults to 'src/data/resume.yaml'. The RESUME_DATA environment variable
+   * overrides it for one build.
    */
-  data: string;
+  data?: string;
   /** Language of the interface labels and date formats ('en' | 'fr', see src/i18n/ui.ts). */
   lang: Locale;
   /** Theme used before the visitor picks one: follow the OS, or force light/dark. */
