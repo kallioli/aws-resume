@@ -13,8 +13,14 @@ import { resume } from '../lib/resume';
 import { personJsonLd } from '../lib/jsonld';
 
 const { basics } = resume;
+/** First sentence-ish of the summary, cut on a word boundary for search snippets. */
+function excerpt(text: string, max = 160): string {
+  const flat = text.replace(/\s+/g, ' ').trim();
+  if (flat.length <= max) return flat;
+  return `${flat.slice(0, flat.lastIndexOf(' ', max - 1))}…`;
+}
 const description =
-  config.description ?? basics.summary?.replace(/\s+/g, ' ').trim().slice(0, 160) ?? `${basics.name}, ${basics.title}`;
+  config.description ?? (basics.summary ? excerpt(basics.summary) : `${basics.name}, ${basics.title}`);
 const jsonLd = personJsonLd(resume, Astro.site, import.meta.env.BASE_URL);
 
 const has = <T,>(list: T[] | undefined): list is T[] => Array.isArray(list) && list.length > 0;
