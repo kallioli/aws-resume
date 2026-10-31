@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { relative, resolve, sep } from 'node:path';
 import { defineConfig } from 'astro/config';
-import theme from './src/config.ts';
+import themeConfig from './src/config.ts';
 import { brandInfo, brands, isBrand } from './src/brands.ts';
 
 /**
@@ -25,12 +25,14 @@ const base = process.env.BASE_PATH === undefined ? '/cloud-resume' : process.env
  * DEMO_LINKS=true adds the "Other styles" links used by the public demo.
  */
 const root = fileURLToPath(new URL('.', import.meta.url));
-const brand = process.env.BRAND || theme.brand;
+// Both settings are optional: older config.ts files have neither.
+const theme = /** @type {{ brand?: string; data?: string }} */ (/** @type {unknown} */ (themeConfig));
+const brand = process.env.BRAND || theme.brand || 'aws';
 if (!isBrand(brand)) {
   throw new Error(`Unknown brand "${brand}". Expected one of: ${brands.join(', ')}.`);
 }
 const font = brandInfo[brand].font;
-const dataFile = process.env.RESUME_DATA || theme.data;
+const dataFile = process.env.RESUME_DATA || theme.data || 'src/data/resume.yaml';
 const dataPath = resolve(root, dataFile);
 const dataRel = relative(root, dataPath).split(sep).join('/');
 if (dataRel.startsWith('..') || !existsSync(dataPath)) {
