@@ -280,9 +280,23 @@ code {
 
 @media (max-width: 39.99rem) {
   .topbar__sep,
-  .topbar__page,
-  .btn span {
+  .topbar__page {
     display: none;
+  }
+
+  /* Icon-only buttons on phones; the text stays available to screen readers. */
+  .topbar .btn {
+    padding: 0;
+    width: 2.25rem;
+  }
+
+  .topbar .btn > span:not(.theme-toggle__icon) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
 }
 
