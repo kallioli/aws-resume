@@ -16,7 +16,8 @@ import { brandInfo, brands, isBrand } from './src/brands.ts';
  * so you only need to edit the defaults below for local builds or other hosts.
  */
 const site = process.env.SITE || 'https://kallioli.github.io';
-const base = process.env.BASE_PATH || '/cloud-resume';
+// An empty BASE_PATH (user site or custom domain, as reported by configure-pages) means the root.
+const base = process.env.BASE_PATH === undefined ? '/cloud-resume' : process.env.BASE_PATH || '/';
 
 /**
  * Brand and data file: `src/config.ts`, overridable per build with
