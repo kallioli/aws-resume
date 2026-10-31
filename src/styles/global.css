@@ -1,9 +1,11 @@
 /*
- * aws-resume theme styles.
+ * cloud-resume theme styles.
  *
  * Customise the look by editing the tokens below: colours, font, radius.
- * Light values live in :root, dark values in the two blocks that follow
- * (OS preference, and the explicit toggle). Text colours meet WCAG AA.
+ * The default (AWS) light values live in :root, dark values in the two blocks
+ * that follow (OS preference, and the explicit toggle). The other brands
+ * (`brand` in src/config.ts) override the same tokens in the
+ * `[data-brand=...]` blocks after them. Text colours meet WCAG AA.
  */
 
 :root {
@@ -15,9 +17,39 @@
 
   --font-sans: 'Inter Variable', 'Inter', 'Amazon Ember', 'Helvetica Neue', Arial, system-ui, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+  --font-features: 'cv11', 'ss01';
+  --font-size: 0.9375rem;
   --radius: 12px;
   --radius-sm: 8px;
   --max-width: 1200px;
+
+  /* Console details (same in light and dark for AWS) */
+  --topbar-rule: 3px solid var(--orange);
+  --topbar-control-border: rgb(255 255 255 / 0.45);
+  --topbar-control-hover: rgb(255 255 255 / 0.1);
+  --topbar-control-hover-border: #ffffff;
+  --topbar-focus: var(--orange);
+  --logo-bg: var(--orange);
+  --logo-text: var(--squid-ink);
+  --logo-radius: 6px;
+  --btn-radius: 999px;
+  --btn-primary-bg: var(--orange);
+  --btn-primary-text: var(--squid-ink);
+  --btn-primary-hover: #ffac31;
+  --card-border: none;
+  --card-header-bg: transparent;
+  --card-title-size: 1.125rem;
+  --heading-weight: 700;
+  --name-weight: 800;
+  --profile-rule: 4px solid var(--orange);
+  --initials-bg: var(--squid-ink);
+  --initials-text: #ffffff;
+  --timeline: var(--orange-strong);
+  --timeline-current: var(--orange);
+  --marker: var(--orange-strong);
+  --tag-radius: 999px;
+  --accent-strong: var(--orange-strong);
+  --print-rule: var(--orange);
 
   /* Light theme */
   --bg: #f2f3f3;
@@ -95,6 +127,249 @@
   color-scheme: dark;
 }
 
+/* ───────────────────────── Brands ─────────────────────────
+ *
+ * `brand` in src/config.ts sets <html data-brand="...">; `aws` uses the
+ * defaults above. Each block overrides the same tokens in one place, with
+ * light-dark(light, dark) pairs that follow the colour scheme selected by
+ * the blocks above (OS preference or toggle). The print stylesheet resets the
+ * colours to light at a higher specificity.
+ *
+ * The colours evoke each console; no logo or artwork is used. Not affiliated
+ * with Amazon, Microsoft, Google or the OpenInfra Foundation.
+ */
+
+/* Azure: Fluent 2 neutrals, communication blue. */
+:root[data-brand='azure'] {
+  --font-sans: 'Open Sans Variable', 'Open Sans', 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
+  --font-features: normal;
+  --radius: 4px;
+  --radius-sm: 4px;
+
+  --bg: light-dark(#faf9f8, #1b1a19);
+  --surface: light-dark(#ffffff, #252423);
+  --surface-sunken: light-dark(#faf9f8, #201f1e);
+  --border: light-dark(#e1dfdd, #484644);
+  --border-strong: light-dark(#8a8886, #8a8886);
+  --text: light-dark(#242424, #f3f2f1);
+  --text-muted: light-dark(#605e5c, #c8c6c4);
+  --link: light-dark(#0f6cbd, #62abf5);
+  --link-hover: light-dark(#0c3b5e, #96c6fa);
+  --focus: light-dark(#0f6cbd, #62abf5);
+  --accent: #0078d4;
+  --tag-bg: light-dark(#ebf3fc, #082338);
+  --tag-text: light-dark(#0c3b5e, #cfe4fa);
+  --tag-border: light-dark(#b4d6fa, #0e4775);
+  --ok: light-dark(#107c10, #54b054);
+  --off: light-dark(#8a5300, #f2c661);
+  --meter-off: light-dark(#e1dfdd, #484644);
+  --meter-on: light-dark(#0078d4, #479ef5);
+  --topbar-bg: light-dark(#0f6cbd, #1f1f1f);
+  --topbar-text: #ffffff;
+  --topbar-muted: light-dark(#e6f0fa, #d2d0ce);
+  --shadow: 0 1.6px 3.6px light-dark(rgb(0 0 0 / 0.13), rgb(0 0 0 / 0.5)),
+    0 0.3px 0.9px light-dark(rgb(0 0 0 / 0.11), rgb(0 0 0 / 0.4));
+
+  --topbar-rule: 0 solid transparent;
+  --topbar-control-border: rgb(255 255 255 / 0.55);
+  --topbar-control-hover: rgb(255 255 255 / 0.12);
+  --topbar-focus: #ffffff;
+  --logo-bg: light-dark(#ffffff, #479ef5);
+  --logo-text: light-dark(#0f6cbd, #1f1f1f);
+  --logo-radius: 2px;
+  --btn-radius: 4px;
+  --btn-primary-bg: light-dark(#0f6cbd, #115ea3);
+  --btn-primary-text: #ffffff;
+  --btn-primary-hover: light-dark(#115ea3, #0f548c);
+  --card-title-size: 1.1875rem;
+  --heading-weight: 600;
+  --name-weight: 600;
+  --profile-rule: 3px solid light-dark(#0f6cbd, #479ef5);
+  --initials-bg: #0f6cbd;
+  --timeline: light-dark(#0f6cbd, #479ef5);
+  --timeline-current: light-dark(#0078d4, #479ef5);
+  --marker: light-dark(#0f6cbd, #479ef5);
+  --tag-radius: 4px;
+  --accent-strong: light-dark(#0f6cbd, #62abf5);
+  --print-rule: #0f6cbd;
+}
+
+/* Google Cloud: Material neutrals, Google blue, with red / yellow / green accents. */
+:root[data-brand='gcp'] {
+  --font-sans: 'Google Sans Flex Variable', 'Google Sans', Roboto, Arial, system-ui, sans-serif;
+  --font-features: normal;
+  --radius: 8px;
+  --radius-sm: 8px;
+  --g-blue: #1a73e8;
+  --g-red: #ea4335;
+  --g-yellow: #fbbc04;
+  --g-green: #34a853;
+
+  --bg: light-dark(#f8f9fa, #131314);
+  --surface: light-dark(#ffffff, #1e1f20);
+  --surface-sunken: light-dark(#f8f9fa, #1b1b1c);
+  --border: light-dark(#dadce0, #444746);
+  --border-strong: light-dark(#80868b, #8e918f);
+  --text: light-dark(#202124, #e3e3e3);
+  --text-muted: light-dark(#5f6368, #c4c7c5);
+  --link: light-dark(#1967d2, #a8c7fa);
+  --link-hover: light-dark(#174ea6, #d3e3fd);
+  --focus: light-dark(#1a73e8, #a8c7fa);
+  --accent: var(--g-blue);
+  --tag-bg: light-dark(#e8f0fe, #0842a0);
+  --tag-text: light-dark(#174ea6, #d3e3fd);
+  --tag-border: light-dark(#d2e3fc, #0b57d0);
+  --ok: light-dark(#137333, #6dd58c);
+  --off: light-dark(#8c4a00, #fdd663);
+  --meter-off: light-dark(#dadce0, #444746);
+  --meter-on: light-dark(#1a73e8, #a8c7fa);
+  --topbar-bg: light-dark(#ffffff, #1e1f20);
+  --topbar-text: light-dark(#202124, #e3e3e3);
+  --topbar-muted: light-dark(#5f6368, #c4c7c5);
+  --shadow: none;
+
+  --topbar-rule: 1px solid var(--border);
+  --topbar-control-border: light-dark(#dadce0, #5f6368);
+  --topbar-control-hover: light-dark(#f1f3f4, #2d2e30);
+  --topbar-control-hover-border: light-dark(#80868b, #8e918f);
+  --topbar-focus: var(--focus);
+  --logo-bg: light-dark(#1a73e8, #a8c7fa);
+  --logo-text: light-dark(#ffffff, #062e6f);
+  --logo-radius: 50%;
+  --btn-radius: 4px;
+  --btn-primary-bg: light-dark(#1a73e8, #a8c7fa);
+  --btn-primary-text: light-dark(#ffffff, #062e6f);
+  --btn-primary-hover: light-dark(#1765cc, #d3e3fd);
+  --card-border: 1px solid var(--border);
+  --card-title-size: 1.25rem;
+  --heading-weight: 500;
+  --name-weight: 500;
+  --profile-rule: 1px solid var(--border);
+  --initials-bg: #1a73e8;
+  --timeline: light-dark(#1a73e8, #a8c7fa);
+  --timeline-current: light-dark(#1e8e3e, #6dd58c);
+  --marker: light-dark(#1a73e8, #a8c7fa);
+  --tag-radius: 8px;
+  --accent-strong: light-dark(#d93025, #f28b82);
+  --print-rule: #1a73e8;
+}
+
+/* Four-colour accent stripe under the bar and on the profile card (decorative). */
+[data-brand='gcp'] .topbar,
+[data-brand='gcp'] .profile {
+  position: relative;
+}
+
+[data-brand='gcp'] .topbar::after,
+[data-brand='gcp'] .profile::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--g-blue) 0 25%,
+    var(--g-red) 25% 50%,
+    var(--g-yellow) 50% 75%,
+    var(--g-green) 75%
+  );
+}
+
+[data-brand='gcp'] .profile::before {
+  top: -1px;
+  bottom: auto;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+[data-brand='gcp'] .skill-group__title {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.875rem;
+}
+
+/* OpenStack: Horizon / Skyline style, red accent on dark grey and neutral panels. */
+:root[data-brand='openstack'] {
+  --font-sans: 'Source Sans 3 Variable', 'Source Sans 3', 'Helvetica Neue', Arial, system-ui, sans-serif;
+  --font-features: normal;
+  --font-size: 1rem;
+  --radius: 4px;
+  --radius-sm: 4px;
+
+  --bg: light-dark(#f2f2f2, #141414);
+  --surface: light-dark(#ffffff, #1f1f1f);
+  --surface-sunken: light-dark(#f7f7f7, #1a1a1a);
+  --border: light-dark(#dcdcdc, #3d3d3d);
+  --border-strong: light-dark(#8c8c8c, #8c8c8c);
+  --text: light-dark(#1f1f1f, #ededed);
+  --text-muted: light-dark(#595959, #b5b5b5);
+  --link: light-dark(#b0103a, #ff8fa3);
+  --link-hover: light-dark(#7d0a28, #ffc2cd);
+  --focus: light-dark(#c8102e, #ff5c7a);
+  --accent: #ed1944;
+  --tag-bg: light-dark(#fdecef, #3a0d18);
+  --tag-text: light-dark(#8a0c26, #ffd6de);
+  --tag-border: light-dark(#f6b3c0, #6b1a2c);
+  --ok: light-dark(#2e7d32, #73d13d);
+  --off: light-dark(#8a5a00, #ffc53d);
+  --meter-off: light-dark(#dcdcdc, #3d3d3d);
+  --meter-on: light-dark(#ed1944, #ff4d6d);
+  --topbar-bg: light-dark(#2b2b2b, #1a1a1a);
+  --topbar-text: #ffffff;
+  --topbar-muted: #cfcfcf;
+  --shadow: 0 1px 2px light-dark(rgb(0 0 0 / 0.06), rgb(0 0 0 / 0.5));
+
+  --topbar-rule: 3px solid #ed1944;
+  --topbar-focus: #ff5c7a;
+  --logo-bg: #ed1944;
+  --logo-text: #ffffff;
+  --logo-radius: 4px;
+  --btn-radius: 4px;
+  --btn-primary-bg: light-dark(#c8102e, #ff5c7a);
+  --btn-primary-text: light-dark(#ffffff, #1a1a1a);
+  --btn-primary-hover: light-dark(#a50d26, #ff8fa3);
+  --card-border: 1px solid var(--border);
+  --card-header-bg: light-dark(#f7f7f7, #262626);
+  --card-title-size: 1.125rem;
+  --heading-weight: 600;
+  --name-weight: 700;
+  --profile-rule: 3px solid #ed1944;
+  --initials-bg: #2b2b2b;
+  --timeline: light-dark(#ed1944, #ff4d6d);
+  --timeline-current: light-dark(#c8102e, #ff4d6d);
+  --marker: light-dark(#ed1944, #ff4d6d);
+  --tag-radius: 3px;
+  --accent-strong: light-dark(#c8102e, #ff5c7a);
+  --print-rule: #ed1944;
+}
+
+/* ───────────────────────── Demo style switcher (DEMO_LINKS=true only) ───────────────────────── */
+
+.style-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 0.5rem;
+  margin-top: 0.375rem;
+}
+
+.style-switcher ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+}
+
+.style-switcher li + li::before {
+  content: '·';
+  margin-right: 0.5rem;
+}
+
+.style-switcher a[aria-current='page'] {
+  font-weight: 700;
+  text-decoration: none;
+}
+
 /* ───────────────────────── Base ───────────────────────── */
 
 *,
@@ -114,9 +389,9 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
-  font-size: 0.9375rem;
+  font-size: var(--font-size);
   line-height: 1.55;
-  font-feature-settings: 'cv11', 'ss01';
+  font-feature-settings: var(--font-features);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -216,7 +491,7 @@ code {
 .topbar {
   background: var(--topbar-bg);
   color: var(--topbar-text);
-  border-bottom: 3px solid var(--orange);
+  border-bottom: var(--topbar-rule);
 }
 
 .topbar__inner {
@@ -249,9 +524,9 @@ code {
   place-items: center;
   width: 1.875rem;
   height: 1.875rem;
-  border-radius: 6px;
-  background: var(--orange);
-  color: var(--squid-ink);
+  border-radius: var(--logo-radius);
+  background: var(--logo-bg);
+  color: var(--logo-text);
   flex: none;
 }
 
@@ -310,7 +585,7 @@ code {
   min-height: 2.25rem;
   min-width: 2.25rem;
   padding: 0.25rem 0.875rem;
-  border-radius: 999px;
+  border-radius: var(--btn-radius);
   border: 2px solid transparent;
   font: inherit;
   font-size: 0.875rem;
@@ -321,26 +596,26 @@ code {
 }
 
 .btn--primary {
-  background: var(--orange);
-  color: var(--squid-ink);
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
 }
 
 .btn--primary:hover {
-  background: #ffac31;
-  color: var(--squid-ink);
+  background: var(--btn-primary-hover);
+  color: var(--btn-primary-text);
 }
 
 .btn--ghost,
 .btn--icon {
   background: transparent;
   color: var(--topbar-text);
-  border-color: rgb(255 255 255 / 0.45);
+  border-color: var(--topbar-control-border);
 }
 
 .btn--ghost:hover,
 .btn--icon:hover {
-  background: rgb(255 255 255 / 0.1);
-  border-color: #ffffff;
+  background: var(--topbar-control-hover);
+  border-color: var(--topbar-control-hover-border);
 }
 
 .btn--icon {
@@ -349,7 +624,7 @@ code {
 }
 
 .topbar :focus-visible {
-  outline-color: var(--orange);
+  outline-color: var(--topbar-focus);
 }
 
 .theme-toggle__icon {
@@ -411,6 +686,7 @@ code {
 
 .card {
   background: var(--surface);
+  border: var(--card-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   min-width: 0;
@@ -423,11 +699,13 @@ code {
   gap: 1rem;
   padding: 0.875rem 1.25rem;
   border-bottom: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--card-header-bg);
 }
 
 .card__title {
-  font-size: 1.125rem;
-  font-weight: 700;
+  font-size: var(--card-title-size);
+  font-weight: var(--heading-weight);
   line-height: 1.3;
   letter-spacing: -0.01em;
 }
@@ -448,7 +726,7 @@ code {
   padding: 1.25rem;
   display: grid;
   gap: 1.25rem;
-  border-top: 4px solid var(--orange);
+  border-top: var(--profile-rule);
 }
 
 .profile__head {
@@ -470,15 +748,15 @@ code {
 .profile__photo--initials {
   display: grid;
   place-items: center;
-  background: var(--squid-ink);
-  color: #ffffff;
+  background: var(--initials-bg);
+  color: var(--initials-text);
   font-size: 1.75rem;
   font-weight: 700;
 }
 
 .profile__name {
   font-size: 1.625rem;
-  font-weight: 800;
+  font-weight: var(--name-weight);
   line-height: 1.15;
   letter-spacing: -0.02em;
 }
@@ -615,12 +893,12 @@ code {
   height: 0.75rem;
   border-radius: 50%;
   background: var(--surface);
-  border: 3px solid var(--orange-strong);
+  border: 3px solid var(--timeline);
 }
 
 .timeline__item:first-child::after {
-  background: var(--orange);
-  border-color: var(--orange);
+  background: var(--timeline-current);
+  border-color: var(--timeline-current);
 }
 
 .list {
@@ -675,7 +953,7 @@ code {
 }
 
 .entry__highlights li::marker {
-  color: var(--orange-strong);
+  color: var(--marker);
 }
 
 /* ───────────────────────── Tags ───────────────────────── */
@@ -696,7 +974,7 @@ code {
   display: inline-flex;
   align-items: center;
   padding: 0.125rem 0.625rem;
-  border-radius: 999px;
+  border-radius: var(--tag-radius);
   border: 1px solid var(--tag-border);
   background: var(--tag-bg);
   color: var(--tag-text);
@@ -867,7 +1145,7 @@ code {
 .notfound__code {
   font-size: 3rem;
   font-weight: 800;
-  color: var(--orange-strong);
+  color: var(--accent-strong);
   line-height: 1;
 }
 
@@ -905,6 +1183,8 @@ code {
     --off: #6b4f00;
     --meter-off: #d5dbdb;
     --meter-on: #16191f;
+    --card-border: none;
+    --card-header-bg: transparent;
     color-scheme: light;
   }
 
@@ -921,6 +1201,10 @@ code {
   .skip-link,
   .cert__verify {
     display: none !important;
+  }
+
+  [data-brand='gcp'] .profile::before {
+    display: none;
   }
 
   a {
@@ -940,7 +1224,7 @@ code {
 
   .card__header {
     padding: 0 0 1.5mm;
-    border-bottom: 1.5px solid var(--orange);
+    border-bottom: 1.5px solid var(--print-rule);
   }
 
   .card__title {
@@ -959,7 +1243,7 @@ code {
     padding: 0 0 3mm;
     gap: 3mm;
     border-top: 0;
-    border-bottom: 1.5px solid var(--orange);
+    border-bottom: 1.5px solid var(--print-rule);
   }
 
   .profile__photo {
