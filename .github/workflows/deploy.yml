@@ -35,7 +35,10 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run build
+      # Your site: src/config.ts + src/data/resume.yaml.
+      # Only the theme's own repository publishes the four-brand demo instead
+      # (aws at the root, /azure/, /gcp/, /openstack/; see scripts/build-demo.ts).
+      - run: npm run "${{ github.repository == 'kallioli/cloud-resume' && 'build:demo' || 'build' }}"
         env:
           SITE: ${{ steps.pages.outputs.origin }}
           BASE_PATH: ${{ steps.pages.outputs.base_path }}

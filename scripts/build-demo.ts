@@ -14,7 +14,7 @@
 import { execFileSync } from 'node:child_process';
 import { brands } from '../src/brands.ts';
 
-const root = (process.env.BASE_PATH || '/cloud-resume').replace(/\/+$/, '');
+const root = (process.env.BASE_PATH ?? '/cloud-resume').replace(/\/+$/, '');
 const outDir = process.env.DEMO_OUT_DIR || 'dist';
 
 // `aws` first: it owns the output root, and Astro empties its outDir before building.
