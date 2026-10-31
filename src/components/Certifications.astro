@@ -4,13 +4,15 @@ import Icon from './Icon.astro';
 import type { Certification } from '../lib/schema';
 import { assetUrl, formatDate, isExpired } from '../lib/format';
 import { lang, t } from '../i18n';
+import { brand } from 'virtual:cloud-resume/build';
+import { brandInfo } from '../brands';
 
 interface Props {
   items: Certification[];
 }
 const { items } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const placeholder = assetUrl('badge-placeholder.svg', base);
+const placeholder = assetUrl(brandInfo[brand].badgePlaceholder, base);
 
 // Active certifications first, then most recent.
 const sorted = [...items].sort(
