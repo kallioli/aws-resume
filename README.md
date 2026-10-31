@@ -1,11 +1,22 @@
-# aws-resume
+# cloud-resume
 
-A modern, data-driven resume / CV theme for cloud engineers, styled after the AWS
-console. Edit one YAML file, push, and GitHub Pages publishes your resume.
+A modern, data-driven resume / CV theme for cloud engineers, in the style of the
+**AWS, Azure, Google Cloud or OpenStack** consoles. Edit one YAML file, pick a style,
+push, and GitHub Pages publishes your resume.
 
-**Live demo:** <https://kallioli.github.io/aws-resume/>
+**Live demo:** [AWS](https://kallioli.github.io/cloud-resume/) ·
+[Azure](https://kallioli.github.io/cloud-resume/azure/) ·
+[Google Cloud](https://kallioli.github.io/cloud-resume/gcp/) ·
+[OpenStack](https://kallioli.github.io/cloud-resume/openstack/)
+
+> **Formerly `aws-resume`.** The repository was renamed to `cloud-resume` when the
+> Azure, Google Cloud and OpenStack styles were added. Git URLs and links to the old
+> repository redirect automatically, but the old demo address
+> `kallioli.github.io/aws-resume/` no longer works: use the links above.
+> Existing sites keep the AWS style and build unchanged.
 
 - One data file (`src/data/resume.yaml`), validated at build time with clear error messages
+- Four styles (`aws`, `azure`, `gcp`, `openstack`) from one codebase: one setting changes colours, font and console details
 - Light and dark mode (follows the OS, with a toggle that remembers the choice)
 - Phone-first responsive layout, semantic HTML, WCAG AA contrast, keyboard friendly
 - Print stylesheet: "Print → Save as PDF" gives a clean two-page A4 resume
@@ -13,6 +24,17 @@ console. Edit one YAML file, push, and GitHub Pages publishes your resume.
 - No tracking by default, no client-side framework: about 1 KB of inline JS for the theme toggle and print button
 - Interface in English or French (easy to add more languages)
 - Built with [Astro](https://astro.build) and TypeScript; deploys with the official GitHub Pages actions
+
+| AWS | Azure |
+| --- | --- |
+| ![AWS style, light mode](docs/screenshots/brands/aws-light.png) | ![Azure style, light mode](docs/screenshots/brands/azure-light.png) |
+| **Google Cloud** | **OpenStack** |
+| ![Google Cloud style, light mode](docs/screenshots/brands/gcp-light.png) | ![OpenStack style, light mode](docs/screenshots/brands/openstack-light.png) |
+
+<details>
+<summary>Dark mode (all styles), mobile and print</summary>
+
+![The four styles in dark mode](docs/screenshots/brands/dark-collage.png)
 
 | Light | Dark |
 | --- | --- |
@@ -22,17 +44,20 @@ console. Edit one YAML file, push, and GitHub Pages publishes your resume.
 | --- | --- | --- |
 | ![Mobile, light mode](docs/screenshots/mobile-light.png) | ![Mobile, dark mode](docs/screenshots/mobile-dark.png) | ![Printed first page](docs/screenshots/print-page-1.png) |
 
+</details>
+
 > **Coming from the 2017 Jekyll version?** It is kept unchanged on the
-> [`legacy/jekyll`](https://github.com/kallioli/aws-resume/tree/legacy/jekyll) branch.
+> [`legacy/jekyll`](https://github.com/kallioli/cloud-resume/tree/legacy/jekyll) branch.
 > Version 2 is a full rewrite: the data format changed, so existing forks should copy
 > their content into the new `resume.yaml` rather than merge.
 
 ## Quick start
 
 1. Click **Use this template** (or **Fork**) at the top of this page and name the repository,
-   for example `aws-resume` or `<your-user>.github.io`.
+   for example `cloud-resume` or `<your-user>.github.io`.
 2. In your new repository open **Settings → Pages** and set **Source** to **GitHub Actions**.
 3. Edit [`src/data/resume.yaml`](src/data/resume.yaml) on GitHub (pencil icon) and commit.
+   Optionally pick a style with `brand` in [`src/config.ts`](src/config.ts) (see [Styles](#styles-aws-azure-google-cloud-openstack)).
 4. The **Deploy to GitHub Pages** workflow builds and publishes the site.
    It appears at `https://<your-user>.github.io/<repository>/` after a minute.
 
@@ -45,11 +70,57 @@ Requires Node.js 22.23 or newer (the version used in CI is in `.nvmrc`).
 
 ```sh
 npm ci
-npm run dev       # http://localhost:4321/aws-resume/ with live reload
+npm run dev       # http://localhost:4321/cloud-resume/ with live reload
 npm run check     # type-check the project and the templates
 npm run build     # static site in dist/
 npm run preview   # serve dist/ locally
+
+BRAND=gcp npm run dev                                      # try another style
+BRAND=azure RESUME_DATA=src/data/examples/azure.yaml npm run dev   # with its example data
+npm run build:demo   # the public demo: every style with its example, in dist/
 ```
+
+## Styles (AWS, Azure, Google Cloud, OpenStack)
+
+The same page, markup and data come in four styles. A style changes the colour
+palette (light and dark), the font and a few console details: top bar, card corners
+and shadows, section headers, accent rules, buttons and chips.
+
+| `brand` | Palette | Font (self-hosted, SIL OFL) | Console details |
+| --- | --- | --- | --- |
+| `aws` (default) | Squid ink `#232F3E`, orange `#FF9900` | [Inter](https://rsms.me/inter/) | Dark bar with orange rule, rounded cards, pill buttons |
+| `azure` | Azure blue `#0078D4` / `#0F6CBD`, Fluent neutrals | [Open Sans](https://fonts.google.com/specimen/Open+Sans) (close to Segoe UI) | Blue bar, 4 px corners, Fluent depth shadows, semibold headers |
+| `gcp` | Google blue `#1A73E8`, red / yellow / green accents, Material neutrals | [Google Sans Flex](https://fonts.google.com/specimen/Google+Sans+Flex) | White bar with a four-colour stripe, outlined 8 px cards, no shadows |
+| `openstack` | OpenStack red `#ED1944`, dark grey and neutral panels | [Source Sans 3](https://fonts.google.com/specimen/Source+Sans+3) | Dark bar with red rule, Horizon-like panels with grey headers |
+
+**Pick a style** in `src/config.ts`:
+
+```ts
+const config: ThemeConfig = {
+  brand: 'azure',               // 'aws' | 'azure' | 'gcp' | 'openstack'
+  data: 'src/data/resume.yaml', // your data file
+  // ...
+};
+```
+
+Only the font of the selected style is bundled. For a one-off build, the environment
+variables `BRAND` and `RESUME_DATA` override both settings. Every style has a fictional
+example in [`src/data/examples/`](src/data/examples) (`aws.yaml`, `azure.yaml`, `gcp.yaml`,
+`openstack.yaml`) with current certification names and hot-linked badge images; copy
+the one you like over `src/data/resume.yaml` as a starting point. Without an `issuer`,
+certifications default to the vendor of the style (Amazon Web Services, Microsoft,
+Google Cloud, OpenInfra Foundation).
+
+All four styles meet WCAG AA contrast in light and dark mode, and print as a clean light
+A4 resume. The header icon, favicon and placeholder badge are a generic cloud glyph:
+the styles use colours only, no logos.
+
+> **Trademarks.** AWS, Microsoft Azure, Google Cloud and OpenStack are trademarks of
+> their respective owners (Amazon.com, Inc. or its affiliates, Microsoft Corporation,
+> Google LLC, the OpenInfra Foundation). The styles only evoke the colours of their
+> consoles. This project is not affiliated with, sponsored or endorsed by Amazon,
+> Microsoft, Google or the OpenInfra Foundation, and includes none of their logos or
+> badge artwork.
 
 ## Data file reference
 
@@ -104,15 +175,16 @@ from the page.
 | Key | Type | Notes |
 | --- | --- | --- |
 | `name`, `issued` | string / date | **Required.** |
-| `issuer` | string | Defaults to `Amazon Web Services`. |
+| `issuer` | string | Defaults to the vendor of the style: `Amazon Web Services` (`aws`), `Microsoft`, `Google Cloud`, `OpenInfra Foundation`. |
 | `expires` | date | Omit if it does not expire. Expired certifications are greyed out and listed last. |
 | `credentialId` | string | |
 | `url` | URL | Public verification page (Credly, issuer portal). |
 | `badge` | URL or file | Badge image. Omit to use the generic placeholder. |
 
-AWS badge artwork is a trademark of Amazon and is **not** included in this repository.
-To show your official badge, open your badge on [Credly](https://www.credly.com), copy the
-image address and paste it as `badge`. The example data does this with the public badge images.
+Vendor badge artwork is trademarked and is **not** included in this repository.
+To show your official badge, open your badge on [Credly](https://www.credly.com) (AWS,
+Google Cloud, Linux Foundation, ...) or your Microsoft Learn profile, copy the image
+address and paste it as `badge`. The example data does this with the public badge images.
 
 AWS renamed *SysOps Administrator – Associate* to **CloudOps Engineer – Associate** with the
 SOA-C03 exam (September 2025). Use the name printed on your own certificate.
@@ -152,6 +224,8 @@ A list of strings, or `{ name, url }` objects.
 
 | Setting | Default | Description |
 | --- | --- | --- |
+| `brand` | `'aws'` | Style: `'aws'`, `'azure'`, `'gcp'` or `'openstack'`. Env override: `BRAND`. |
+| `data` | `'src/data/resume.yaml'` | Data file, relative to the project root. Env override: `RESUME_DATA`. |
 | `lang` | `'en'` | Interface language and date format: `'en'` or `'fr'`. |
 | `defaultTheme` | `'system'` | `'system'`, `'light'` or `'dark'` before the visitor uses the toggle. |
 | `sections` | experiences, certifications, projects, education | Order of the main column. Remove an id to hide the section. |
@@ -164,16 +238,15 @@ A list of strings, or `{ name, url }` objects.
 
 ### Colours, font and shape — `src/styles/global.css`
 
-All colours are CSS custom properties at the top of the file: light values in `:root`,
-dark values in the `prefers-color-scheme: dark` block and the `[data-theme='dark']` block
-(keep those two identical). The defaults use the AWS palette — squid ink `#232F3E`,
-orange `#FF9900` — and every text colour meets WCAG AA contrast in both modes.
-`--radius` controls the card corners.
+All colours and console details are CSS custom properties at the top of the file. The
+AWS style uses `:root` (light) and the `prefers-color-scheme: dark` and `[data-theme='dark']`
+blocks (keep those two identical). Each other style overrides the same tokens in one
+`:root[data-brand='…']` block, with `light-dark(light, dark)` pairs. Every text colour
+meets WCAG AA contrast in both modes. `--radius` controls the card corners.
 
-The font is [Inter](https://rsms.me/inter/) (SIL Open Font License), self-hosted through
-`@fontsource-variable/inter`, so no request goes to a third-party font CDN. To use another
-font, install its `@fontsource` package, change the import at the top of
-`src/layouts/Base.astro` and update `--font-sans`.
+Fonts are self-hosted through `@fontsource` packages, so no request goes to a third-party
+font CDN. The package of each style is set in `src/brands.ts` (`font`) and its family in
+`--font-sans`; to use another font, install its `@fontsource` package and change both.
 
 ### Interface labels and new languages — `src/i18n/ui.ts`
 
@@ -216,7 +289,13 @@ dependencies, builds with the URL reported by `actions/configure-pages`, and pub
 `actions/upload-pages-artifact` + `actions/deploy-pages`. The only manual step is
 **Settings → Pages → Source: GitHub Actions**. The workflow does not change that setting.
 
-`.github/workflows/ci.yml` type-checks and builds every pull request. Dependabot opens
+In the theme's own repository (`kallioli/cloud-resume`) the workflow runs
+`npm run build:demo` instead, which publishes the four styles with their example data
+(`/`, `/azure/`, `/gcp/`, `/openstack/`) and adds a small "Other styles" link list in the
+footer (`DEMO_LINKS=true`). Forks and copies always build their own resume, without it.
+
+`.github/workflows/ci.yml` type-checks every pull request, builds the default site and
+builds all four styles. Dependabot opens
 weekly update PRs for npm packages and GitHub Actions (`.github/dependabot.yml`).
 
 ### Custom domain
@@ -241,16 +320,20 @@ as above.
 ```text
 src/
   data/resume.yaml          your content (the only file most people edit)
+  data/examples/            example content for each style
   data/resume.schema.json   JSON Schema for editor autocompletion (generated)
-  config.ts                 theme settings (language, sections, PDF, analytics)
+  config.ts                 theme settings (style, data file, language, sections, PDF, analytics)
+  brands.ts                 the styles: name, default issuer, font, favicon
   i18n/ui.ts                interface labels (en, fr)
   lib/schema.ts             zod schema of the data file
   lib/resume.ts             loads and validates the data file
   components/               one component per section
   layouts/Base.astro        HTML shell, meta tags, top bar, theme toggle
   pages/index.astro         the resume page
-  styles/global.css         design tokens, layout, dark mode, print
+  styles/global.css         design tokens, styles, layout, dark mode, print
 public/                     favicon, example avatar, placeholder badge, your files
+public/brands/              favicon and placeholder badge of the other styles
+scripts/                    JSON Schema generator, demo build
 ```
 
 ## Credits
@@ -258,9 +341,11 @@ public/                     favicon, example avatar, placeholder badge, your fil
 - Original layout: [online-cv](https://github.com/webjeda/online-cv) Jekyll theme by
   [webjeda](https://github.com/webjeda) (MIT). The 2017 version of this project was derived from it.
 - Icons: [Lucide](https://lucide.dev) (ISC) and [Simple Icons](https://simpleicons.org) (CC0).
-- Font: [Inter](https://rsms.me/inter/) by Rasmus Andersson (SIL Open Font License 1.1).
-- AWS, the AWS logo and the AWS certification badges are trademarks of Amazon.com, Inc.
-  or its affiliates. This project is not affiliated with or endorsed by Amazon Web Services.
+- Fonts (SIL Open Font License 1.1): [Inter](https://rsms.me/inter/) by Rasmus Andersson,
+  Open Sans, Google Sans Flex and Source Sans 3, via [Fontsource](https://fontsource.org).
+- AWS, Microsoft Azure, Google Cloud and OpenStack, their logos and certification badges
+  are trademarks of Amazon.com, Inc. or its affiliates, Microsoft Corporation, Google LLC
+  and the OpenInfra Foundation. This project is not affiliated with or endorsed by any of them.
 
 ## Licence
 
