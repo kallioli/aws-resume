@@ -6,7 +6,8 @@
 # Certification names as published on Microsoft Learn (checked October 2026).
 # Microsoft role-based certifications are renewed every 12 months (free online
 # assessment), hence the one-year expiry dates. The badge images are the generic
-# Microsoft Learn level badges, hot-linked (not bundled in this repository).
+# Microsoft Learn level badges, copied under public/brands/azure/ so the page
+# loads nothing from learn.microsoft.com (its images set cookies).
 
 basics:
   name: Mira Okonkwo
@@ -74,19 +75,19 @@ certifications:
     expires: "2027-02-10"
     credentialId: EXAMPLE-AZ305-0001
     url: https://learn.microsoft.com/en-us/credentials/certifications/azure-solutions-architect/
-    badge: https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-expert-badge.svg
+    badge: brands/azure/microsoft-certified-expert-badge.svg
   - name: "Microsoft Certified: DevOps Engineer Expert"
     issued: "2025-12-03"
     expires: "2026-12-03"
     credentialId: EXAMPLE-AZ400-0002
     url: https://learn.microsoft.com/en-us/credentials/certifications/devops-engineer/
-    badge: https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-expert-badge.svg
+    badge: brands/azure/microsoft-certified-expert-badge.svg
   - name: "Microsoft Certified: Azure Administrator Associate"
     issued: "2026-05-21"
     expires: "2027-05-21"
     credentialId: EXAMPLE-AZ104-0003
     url: https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/
-    badge: https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg
+    badge: brands/azure/microsoft-certified-associate-badge.svg
   # Exam AZ-500 and this certification were retired on 31 August 2026:
   # it can no longer be earned or renewed, so it shows as expired.
   - name: "Microsoft Certified: Azure Security Engineer Associate"
@@ -94,7 +95,7 @@ certifications:
     expires: "2026-08-31"
     credentialId: EXAMPLE-AZ500-0004
     url: https://learn.microsoft.com/en-us/credentials/certifications/azure-security-engineer/
-    badge: https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg
+    badge: brands/azure/microsoft-certified-associate-badge.svg
   - name: Certified Kubernetes Administrator (CKA)
     issuer: The Linux Foundation
     issued: "2025-04-08"
