@@ -106,7 +106,8 @@ const config: ThemeConfig = {
 Only the font of the selected style is bundled. For a one-off build, the environment
 variables `BRAND` and `RESUME_DATA` override both settings. Every style has a fictional
 example in [`src/data/examples/`](src/data/examples) (`aws.yaml`, `azure.yaml`, `gcp.yaml`,
-`openstack.yaml`) with current certification names and hot-linked badge images; copy
+`openstack.yaml`) with current certification names and badge images (hot-linked from
+Credly, except the Microsoft Learn badges, which are copied under `public/brands/azure/`); copy
 the one you like over `src/data/resume.yaml` as a starting point. Without an `issuer`,
 certifications default to the vendor of the style (Amazon Web Services, Microsoft,
 Google Cloud, OpenInfra Foundation).
